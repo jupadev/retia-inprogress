@@ -1,0 +1,234 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retia Health – Coming Soon</title>
+  <meta name="description" content="Retia Health estará disponible muy pronto." />
+  <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --yellow: #E8B830;
+      --teal:   #2DC4BB;
+      --dark:   #0b1220;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--dark);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* ── Canvas background ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Main layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* ── Logo ── */
+    .logo-wrap {
+      margin-bottom: 2.4rem;
+      animation: logoIn 1s cubic-bezier(.22,1,.36,1) both;
+    }
+    .logo-wrap img {
+      width: 130px;
+      height: auto;
+      filter: drop-shadow(0 8px 32px rgba(45,196,187,0.25))
+              drop-shadow(0 4px 16px rgba(232,184,48,0.20));
+    }
+
+    @keyframes logoIn {
+      from { opacity: 0; transform: translateY(-24px) scale(0.92); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ── Brand name ── */
+    .brand {
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.65));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeUp 0.9s 0.2s cubic-bezier(.22,1,.36,1) both;
+    }
+    .brand span {
+      background: linear-gradient(135deg, var(--yellow), var(--teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Tagline ── */
+    .tagline {
+      margin-top: 0.9rem;
+      font-size: clamp(0.95rem, 2.4vw, 1.2rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.52);
+      letter-spacing: 0.01em;
+      animation: fadeUp 0.9s 0.38s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* ── "Coming soon" badge ── */
+    .badge {
+      margin-top: 2.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 1.3rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      animation: fadeUp 0.9s 0.55s cubic-bezier(.22,1,.36,1) both;
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Divider line ── */
+    .divider {
+      margin-top: 2.8rem;
+      width: 48px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--yellow), var(--teal));
+      opacity: 0.55;
+      animation: fadeUp 0.9s 0.7s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* ── Sub-message ── */
+    .sub {
+      margin-top: 1.5rem;
+      font-size: clamp(0.82rem, 1.8vw, 0.95rem);
+      color: rgba(255,255,255,0.32);
+      animation: fadeUp 0.9s 0.82s cubic-bezier(.22,1,.36,1) both;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <main class="page">
+    <div class="logo-wrap">
+      <img src="/logo.svg" alt="Retia Health logo" width="130" height="104" />
+    </div>
+
+    <h1 class="brand">Retia <span>Health</span></h1>
+
+    <p class="tagline">Tu salud, inteligentemente conectada.</p>
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Disponible muy pronto
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="sub">Estamos preparando algo especial para ti.</p>
+  </main>
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Brand colours as [r, g, b]
+    const DARK   = [11, 18, 32];
+    const YELLOW = [232, 184, 48];
+    const TEAL   = [45, 196, 187];
+
+    // Each blob: position driven by independent sine/cosine waves
+    const blobs = [
+      { cx: 0.18, cy: 0.28, r: 0.52, color: YELLOW, opacity: 0.14, fx: 0.00031, fy: 0.00019, px: 0, py: 1.2 },
+      { cx: 0.82, cy: 0.72, r: 0.48, color: TEAL,   opacity: 0.13, fx: 0.00025, fy: 0.00037, px: 2.1, py: 0 },
+      { cx: 0.55, cy: 0.45, r: 0.32, color: TEAL,   opacity: 0.07, fx: 0.00041, fy: 0.00028, px: 4.2, py: 3.1 },
+      { cx: 0.30, cy: 0.70, r: 0.30, color: YELLOW, opacity: 0.07, fx: 0.00022, fy: 0.00044, px: 1.0, py: 5.0 },
+    ];
+
+    let W = 0, H = 0, t = 0;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function draw() {
+      t = performance.now();
+
+      // Dark base
+      ctx.fillStyle = `rgb(${DARK.join(',')})`;
+      ctx.fillRect(0, 0, W, H);
+
+      for (const b of blobs) {
+        // Smooth organic movement via two stacked sine waves per axis
+        const dx = Math.sin(t * b.fx + b.px) * 0.12 + Math.sin(t * b.fx * 0.47 + b.px + 1) * 0.06;
+        const dy = Math.cos(t * b.fy + b.py) * 0.10 + Math.cos(t * b.fy * 0.53 + b.py + 2) * 0.05;
+
+        const x = (b.cx + dx) * W;
+        const y = (b.cy + dy) * H;
+        const r = b.r * Math.max(W, H);
+
+        const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+        const [cr, cg, cb] = b.color;
+        grad.addColorStop(0,   `rgba(${cr},${cg},${cb},${b.opacity})`);
+        grad.addColorStop(0.5, `rgba(${cr},${cg},${cb},${b.opacity * 0.4})`);
+        grad.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`);
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>
